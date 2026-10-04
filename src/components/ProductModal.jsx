@@ -45,34 +45,28 @@ export default function ProductModal({ product, onClose }) {
           <CloseIcon />
         </button>
 
-        <div className="relative grid place-items-center bg-cream-200 p-6 sm:p-8">
-          <img src={product.image} alt={`Paquete de ${product.fullName}`} className="h-60 w-auto object-contain drop-shadow-[0_20px_20px_rgb(30_36_26/0.28)] sm:h-[26rem]" />
+        <div className="relative grid place-items-center bg-cream-200 p-4 sm:p-8">
+          <img src={product.image} alt={`Paquete de ${product.fullName}`} className="h-[12.5rem] w-auto object-contain drop-shadow-[0_20px_20px_rgb(30_36_26/0.28)] sm:h-[26rem]" />
           {product.award && (
-            <img src={product.award.image} alt="" className="absolute bottom-4 left-4 w-20 drop-shadow-lg sm:w-28" />
+            <img src={product.award.image} alt="Gran Oro — Mundial de la Yerba Mate" className="absolute bottom-3 left-3 w-16 drop-shadow-lg sm:bottom-4 sm:left-4 sm:w-28" />
           )}
         </div>
 
-        <div className="flex flex-col p-6 sm:p-9">
-          <span className="text-sm font-semibold tracking-[0.2em] text-gold-500">{product.number} · {product.tagline.toUpperCase()}</span>
-          <h2 id="modal-title" className="mt-1 font-display text-4xl text-ink-800 sm:text-5xl">{product.fullName}</h2>
-          <p className="mt-4 leading-relaxed">{product.description}</p>
-
-          {product.award && (
-            <div className="mt-5 flex items-center gap-4 rounded-xl bg-pine-800 p-4 text-cream-100">
-              <span className="font-display text-4xl leading-none text-gold-400">100<span className="text-base text-gold-300">/100</span></span>
-              <p className="text-sm leading-snug"><strong className="text-gold-300">{product.award.title}.</strong> {product.award.text}</p>
-            </div>
-          )}
+        <div className="flex flex-col p-5 sm:p-9">
+          <h2 id="modal-title" className="font-display text-3xl text-ink-800 sm:text-5xl">{product.fullName}</h2>
 
           {product.variants.length === 1 && (
-            <p className="mt-6 text-3xl font-semibold text-ink-800">
+            <p className="mt-2 text-3xl font-semibold text-ink-800">
               <span className="mr-2 text-base font-medium text-ink-600">{product.variants[0].label}</span>
               <Price id={product.variants[0].id} />
+              {hasPrice && qty > 1 && (
+                <span className="mt-1 block text-base font-medium text-ink-600">{qty} unidades: {formatARS(price * qty)}</span>
+              )}
             </p>
           )}
 
           {product.variants.length > 1 && (
-          <fieldset className="mt-6">
+          <fieldset className="mt-4">
             <legend className="mb-2 text-xs font-semibold tracking-[0.2em] text-ink-800">PRESENTACIÓN</legend>
             <div className="grid grid-cols-2 gap-3">
               {product.variants.map((v) => {
@@ -89,21 +83,25 @@ export default function ProductModal({ product, onClose }) {
           </fieldset>
           )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-4 flex items-center gap-3 sm:mt-6">
             <QtyStepper value={qty} onChange={(n) => setQty(Math.max(1, Math.min(99, n)))} label="Cantidad" />
             <button
               type="button"
               onClick={handleAdd}
               disabled={!hasPrice}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-pine-800 px-5 py-3 font-semibold tracking-wider text-gold-300 transition hover:bg-pine-700 disabled:cursor-not-allowed disabled:opacity-45"
+              className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-pine-800 px-3 py-3 text-sm font-semibold tracking-wide text-gold-300 sm:tracking-wider transition hover:bg-pine-700 disabled:cursor-not-allowed disabled:opacity-45 sm:text-base"
             >
               <CartIcon />
-              {hasPrice ? `AGREGAR · ${formatARS(price * qty)}` : status === 'loading' ? 'CARGANDO PRECIO…' : 'PRECIO NO DISPONIBLE'}
+              {!hasPrice
+                ? status === 'loading' ? 'CARGANDO…' : 'SIN PRECIO'
+                : <>AGREGAR<span className="hidden min-[400px]:inline">&nbsp;AL CARRITO</span></>}
             </button>
           </div>
           {!hasPrice && status !== 'loading' && (
-            <p className="mt-3 text-sm text-alert-600">Esta presentación no tiene un precio válido en este momento. Consultanos por WhatsApp.</p>
+            <p className="mt-3 text-sm text-alert-600">Este producto no tiene un precio válido en este momento. Consultanos por WhatsApp.</p>
           )}
+
+          <p className="mt-5 border-t border-cream-300 pt-5 leading-relaxed">{product.description}</p>
         </div>
       </div>
     </div>
