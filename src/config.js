@@ -33,3 +33,12 @@ export const DELIVERY_OPTIONS = [
     address: null,
   },
 ]
+
+// Créditos a la marca oficial (se muestran en el pie de página).
+export const OFFICIAL_BRAND = {
+  name: 'Yerba Mate Uruguaí',
+  instagram: '@uruguai_arg',
+  instagramUrl: 'https://www.instagram.com/uruguai_arg/',
+  website: 'yerbamateuruguai.com',
+  websiteUrl: 'https://yerbamateuruguai.com',
+}
