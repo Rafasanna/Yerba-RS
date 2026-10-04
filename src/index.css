@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Righteous', 'Fredoka', system-ui, sans-serif;
+  --font-sans: 'Fredoka', system-ui, sans-serif;
+
+  --color-pine-950: #1f271d;
+  --color-pine-900: #263024;
+  --color-pine-800: #2f3a2c;
+  --color-pine-700: #3b4737;
+  --color-gold-300: #d8c08e;
+  --color-gold-400: #c7a86c;
+  --color-gold-500: #b8975a;
+  --color-gold-600: #9c7d45;
+  --color-cream-50: #fbf8f2;
+  --color-cream-100: #f6f1e7;
+  --color-cream-200: #ece4d4;
+  --color-cream-300: #ddd2bc;
+  --color-ink-800: #36402f;
+  --color-ink-600: #57533f;
+  --color-alert-600: #b3412f;
+  --color-alert-50: #fbeee9;
+  --color-wa-500: #25d366;
+  --color-wa-600: #1ebe5a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream-100 font-sans text-ink-600 antialiased;
+}
+
+/* Guarda escalonada inspirada en el packaging */
+.bg-andino {
+  background-color: var(--color-pine-800);
+  background-image:
+    radial-gradient(ellipse at 75% 40%, rgb(184 151 90 / 0.14), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='%23b8975a' fill-opacity='0.07'%3E%3Cpath d='M24 4h8v4h4v4h4v4h4v4h4v8h-4v4h-4v4h-4v4h-4v4h-8v-4h-4v-4h-4v-4h-4v-4H8v-8h4v-4h4v-4h4V8h4zM26 18v4h-4v4h-2v4h2v4h4v4h4v-4h4v-4h2v-4h-2v-4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.guarda {
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M8 0h4v3h3v4h-3v3H8V7H5V3h3z' fill='%23b8975a' fill-opacity='0.55'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to { transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.anim-fade-up { animation: fade-up 0.5s ease both; }
+.anim-slide-in { animation: slide-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.anim-fade-in { animation: fade-in 0.2s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up, .anim-slide-in, .anim-fade-in { animation: none; }
+  html { scroll-behavior: auto; }
+}
